@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.anysou.remoteservice"
+    android:sharedUserId="anysou.cn"
+    >
+
+    <!--android 9.0上使用前台服务，需要添加权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--监听开机权限,允许程序开机自动运行-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!--屏幕保持唤醒，一种锁的机制，只要有进程持有这个锁，系统就无法进入休眠状态-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+
+    <!--
+     常驻应用 persistent="true" :
+        1)在系统刚起来的时候，该App也会被启动起来
+        2)该App被强制杀掉后，系统会重启该App。这种情况只针对系统内置的App，第三方安装的App不会被重启。
+     共享 android:sharedUserId="anysou.cn"
+    -->
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/service"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
+
+
+        <!--注册一个静态广播，并添加权限，实现开机自启动-->
+        <receiver android:name=".AutoReceiver" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+
+        <!--注册Service服务
+        android:enabled="true"    //会被系统默认启动
+        android:exported="true"   //设置可被其他进程调用
+        android:process=":remote" //设置进程名,名字可以任意字符串。:xxx表示是本包的私有进程。目的与Activity不是同一个进程。
+        注意：如果不采用:xxx方式，则必须采用 xxx.xx.xx 包名结构，否则APP手机无法安装 android:process=":remote"
+        -->
+        <service android:name=".MyService" android:enabled="true" android:exported="true" >
+            <!--对于intent-filter可以通过android:priority = "1000"这个属性设置最高优先级，1000是最高值，如果数字越小则优先级越低-->
+            <intent-filter android:priority="1000">
+                <action android:name="com.anysou.remoteservice.MyAidlService"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

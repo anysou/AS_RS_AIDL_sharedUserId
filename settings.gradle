@@ -1,0 +1,4 @@
+rootProject.name='AS_RS_AIDL_sharedUserId'
+include ':app'
+include ':remoteservice'
+include ':aidlclient'
