@@ -23,6 +23,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -171,7 +173,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void readFile(View view) {
-        bindService(intent,serviceConnection,BIND_AUTO_CREATE);
+        bindService(intent,serviceConnection,BIND_AUTO_CREATE); //绑定服务
+        //延时后再，通过AIDL获取服务器端的文件地址（才能确保拿到地址成功，再读取该地址文件）。
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                //要执行的操作
+                readf();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);//1秒后执行TimeTask的run方法
+    }
+
+    private void readf(){
         FileReader fr = null;
         try {
             String pathfile = myAIDL.getPathFile();
@@ -210,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
     // 发送给吐司
     private void sendToast(String msg){
