@@ -1,6 +1,7 @@
 ﻿# 远程服务 + 不死服务 & APP之间通过 sharedUserId 共享资源
 
-远程服务：使用 AIDL(Android Interfice Definition Language) 安卓接口定义语言进行 IPC(Inter Process Communication)跨进程通信。
+远程服务：使用 AIDL(Android Interfice Definition Language) 
+安卓接口定义语言进行 IPC(Inter Process Communication)跨进程通信。
 
 本地服务 --local service：服务运行在当前的应用程序里面。
 远程服务 --remote service：服务运行在其他的应用程序里面。
