@@ -13,11 +13,11 @@ AIDL：andrid interface definition language 安卓接口定义语言。</br>
 
 ## 参考：
 
-[Android：（本地、可通信的、前台、远程）Service使用全面介绍] (https://www.jianshu.com/p/e04c4239b07e)</br>
-[Android中的sharedUserId] (https://www.jianshu.com/p/0e41405b4d87)</br>
-[Android调用远程服务中的方法（AIDL）] (https://blog.csdn.net/nongminkouhao/article/details/88984299)</br>
-[Android Studio签名、打包、自定义apk名称] (https://blog.csdn.net/xyl826/article/details/90904944)</br>
-[史上最全Android build.gradle配置详解] (https://www.jianshu.com/p/538b5388c760)</br>
+[Android：（本地、可通信的、前台、远程）Service使用全面介绍](https://www.jianshu.com/p/e04c4239b07e)</br>
+[Android中的sharedUserId](https://www.jianshu.com/p/0e41405b4d87)</br>
+[Android调用远程服务中的方法（AIDL）](https://blog.csdn.net/nongminkouhao/article/details/88984299)</br>
+[Android Studio签名、打包、自定义apk名称](https://blog.csdn.net/xyl826/article/details/90904944)</br>
+[史上最全Android build.gradle配置详解](https://www.jianshu.com/p/538b5388c760)</br>
 
 ## 操作步骤：
 
@@ -84,7 +84,7 @@ AIDL：andrid interface definition language 安卓接口定义语言。</br>
 
 不同应用APP之间可以通过设置相同sharedUserId来实现在Linux上的用户统一，来打破不同应用间的沙盒性质，已实现数据、资源的共享。
 
-####注意两点：</br>
+#### 注意两点：</br>
 1、sharedUserId的value必须包含一个"."，否则在打包安装到手机的时候会报错。</br>
 2、某些功能的实现需要对相同shareUserId的apk使用相同的签名。
 
