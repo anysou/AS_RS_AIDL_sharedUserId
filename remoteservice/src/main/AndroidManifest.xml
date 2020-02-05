@@ -48,6 +48,7 @@
             <!--对于intent-filter可以通过android:priority = "1000"这个属性设置最高优先级，1000是最高值，如果数字越小则优先级越低-->
             <intent-filter android:priority="1000">
                 <action android:name="com.anysou.remoteservice.MyAidlService"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
 
@@ -57,6 +58,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- logcat 好像可以不写此句 -->
+        <activity android:name="com.github.pedrovgs.lynx.LynxActivity" />
+
     </application>
 
 </manifest>

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //finish();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  //隐藏标题栏
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView2);
 

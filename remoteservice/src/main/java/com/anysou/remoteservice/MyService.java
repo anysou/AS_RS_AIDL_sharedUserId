@@ -12,6 +12,9 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.pedrovgs.lynx.LynxActivity;
+import com.github.pedrovgs.lynx.LynxConfig;
+
 public class MyService extends Service {
 
     private static String TAG = "MyService";
@@ -53,9 +56,20 @@ public class MyService extends Service {
         }
 
         //添加下列三行 构建 "点击通知后打开MainActivity" 的Intent 意图
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        builder.setContentIntent(pendingIntent);       //设置点击通知后的操作
+//        Intent notificationIntent = new Intent(this, MainActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//        builder.setContentIntent(pendingIntent);       //设置点击通知后的操作
+
+        // 下面内容是吧日志猫为点击事件
+        LynxConfig lynxConfig = new LynxConfig();
+        lynxConfig.setMaxNumberOfTracesToShow(4000)  //LynxView中显示的最大跟踪数
+                .setTextSizeInPx(12)       //用于在LynxView中呈现字体大小PX
+                .setSamplingRate(200)      //从应用程序日志中读取的采样率
+                .setFilter("");   //设置过滤
+        Intent lynxActivityIntent = LynxActivity.getIntent(this, lynxConfig);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, lynxActivityIntent, 0);
+        builder.setContentIntent(pendingIntent);
+
 
         Notification notification = builder.getNotification(); //将Builder对象转变成普通的notification
 
