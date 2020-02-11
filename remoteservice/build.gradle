@@ -61,6 +61,8 @@ dependencies {
 
     //Lynx是一个Android库，旨在显示自定义视图，其中包含Android logcat正在打印的所有信息，将渲染不同级别的不同跟踪，以显示从日志消息到应用程序异常的信息
     implementation 'com.github.pedrovgs:lynx:1.1.0'
+    //消息总线
+    implementation 'com.jeremyliao:live-event-bus-x:1.5.7'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

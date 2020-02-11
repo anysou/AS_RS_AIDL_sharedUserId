@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 public class MyService extends Service {
 
@@ -26,7 +27,8 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(getApplicationContext(), "=创建成功！", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "=创建成功！", Toast.LENGTH_LONG).show();
+        LiveEventBus.get("key",String.class).broadcast("=创建成功！");
         Log.i(TAG, "=创建成功！");
         setFrontService();  //设置为前台服务
     }

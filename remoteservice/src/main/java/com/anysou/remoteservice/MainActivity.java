@@ -1,12 +1,15 @@
 package com.anysou.remoteservice;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.github.pedrovgs.lynx.LynxActivity;
 import com.github.pedrovgs.lynx.LynxConfig;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView2);
 
+
+        // 监听 key
+        LiveEventBus.get("key",String.class).observe(this, new Observer<String>() {
+              @Override
+               public void onChanged(@Nullable String s) {
+                    sendToast(s);
+              }
+        });
 
         Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED //锁屏状态下显示
@@ -138,4 +150,5 @@ public class MainActivity extends AppCompatActivity {
     public String getNStaticString(String str,int n){
         return "调用非静态方法一样可以，带参数也行："+str+n;
     }
+
 }

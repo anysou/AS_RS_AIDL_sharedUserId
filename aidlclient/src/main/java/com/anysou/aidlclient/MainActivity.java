@@ -1,6 +1,8 @@
 package com.anysou.aidlclient;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anysou.remoteservice.MyAIDL;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.io.File;
 import java.io.FileReader;
@@ -60,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
         setServiceIntent();  //设置远程服务器绑定的意图
 
         initOtherApp();  // 初始化，根据 另一个APP 的包名和类名，获取 对方APP的上下文和类
+
+        LiveEventBus
+                .get("key", String.class)
+                .observe( this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String s) {
+                        textView.setText(s);
+                    }
+                });
+
     }
 
 
@@ -231,4 +244,9 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
     }
 
+    public void SendKey(View view) {
+        LiveEventBus
+                .get("key", String.class)
+                .broadcast("这是客户端通过发消息总线信息");
+    }
 }
