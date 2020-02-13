@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
         public void onServiceDisconnected(ComponentName name) {
         }
     };
+
     private  TextView textView;
+    private Button SocketButton;
+    private ServiceThread serviceThread = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);  //隐藏标题栏
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView2);
+        SocketButton = (Button) findViewById(R.id.socketbut);
 
 
         // 监听 key
@@ -50,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
                     sendToast(s);
               }
         });
+
+        // SocketRun
+        if(serviceThread!=null){
+            SocketButton.setText("停止SOCKET服务:9999");
+        } else {
+            SocketButton.setText("开启SOCKET服务:9999");
+        }
+
 
         Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED //锁屏状态下显示
@@ -151,4 +164,29 @@ public class MainActivity extends AppCompatActivity {
         return "调用非静态方法一样可以，带参数也行："+str+n;
     }
 
+
+    //================================== Socket 服务器 ================================
+    public void Socket(View view) {
+        if(serviceThread!=null) {
+            String msg = "停止 9999端口的 Socket 服务器";
+            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+            textView.setText(msg);
+            serviceThread.interrupt();  //关闭线程
+            serviceThread = null;
+            SocketButton.setText("开启SOCKET服务:9999");
+        } else{
+            try {
+                serviceThread = new ServiceThread(9999);
+                serviceThread.start();
+                String msg = "启动 Socket 服务器 在 9999 端口";
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                textView.setText(msg);
+                SocketButton.setText("停止SOCKET服务:9999");
+            }catch (Exception e){
+                String msg = "启动Socket服务失败！"+e.toString();
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                textView.setText(msg);
+            }
+        }
+    }
 }

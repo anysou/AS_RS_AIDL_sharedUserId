@@ -14,7 +14,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private String msg = "";
 
     private TextView textView;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView);
+        editText = (EditText) findViewById(R.id.textSocket);
 
         setServiceIntent();  //设置远程服务器绑定的意图
 
@@ -248,5 +252,31 @@ public class MainActivity extends AppCompatActivity {
         LiveEventBus
                 .get("key", String.class)
                 .broadcast("这是客户端通过发消息总线信息");
+    }
+
+    // 向服务器发送 SOCKET
+    public void SendSocket(View view) {
+        String sendMsg = editText.getText().toString();
+        if(TextUtils.isEmpty(sendMsg)){
+            Toast.makeText(this,"请填写要发送SOCKET内容",Toast.LENGTH_SHORT).show();
+        } else {
+            runShell(sendMsg);
+        }
+    }
+
+    // 通过多线程，Socket连接服务器，发送Shell执行指令 给服务器端的 app_process 权限的代为执行
+    private void runShell(final String cmd) {
+        if (TextUtils.isEmpty(cmd)) return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new SocketClient("127.0.0.1","9999",cmd, new SocketClient.onServiceSend() {
+                    @Override
+                    public void getSend(String result) {
+                        textView.setText(result);
+                    }
+                });
+            }
+        }).start();
     }
 }

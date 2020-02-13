@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!--屏幕保持唤醒，一种锁的机制，只要有进程持有这个锁，系统就无法进入休眠状态-->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!--SOCKET 通信需要网络权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <!--
