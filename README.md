@@ -102,7 +102,7 @@ AIDL：andrid interface definition language 安卓接口定义语言。</br>
 
 #### 增加 Socket 通信功能，注意两个APP都要添加 android.permission.INTERNET 权限。
 
-#### 增加 LiveEventBus，一款具有生命周期感知能力的消息事件总线框架。本想实现跨APP通信。但没有成功，发现也不能实现跨进程通信。
+#### 增加 LiveEventBus，一款具有生命周期感知能力的消息事件总线框架。本想实现跨APP通信。( 但没有成功，发现也不能实现跨进程通信)。
 
 
 ## 服务器端 [下载APP](https://github.com/anysou/AS_RS_AIDL_sharedUserId/raw/master/outputs/remoteservice.apk)
