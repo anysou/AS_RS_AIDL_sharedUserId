@@ -138,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(FileUtils.readLogFile());
     }
 
+    public void writeSD(View view) {
+        String msg = FileUtils.writeSD(MainActivity.this,"这是写入SD卡的内容");
+        textView.setText(msg);
+    }
+
+    public void readSD(View view) {
+        String msg = FileUtils.readSD(MainActivity.this);
+        textView.setText(msg);
+    }
+
     // 发送给吐司
     private void sendToast(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
@@ -189,4 +199,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

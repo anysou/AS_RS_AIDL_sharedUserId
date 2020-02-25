@@ -12,7 +12,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <!--SOCKET 通信需要网络权限-->
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <!-- 在 AndroidManifest.xml 中添加权限，安装时会提示要该权限; WRITE写 ； READ读 . 6.0以后，要动态获取权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <!--
      常驻应用 persistent="true" :

@@ -24,8 +24,10 @@ import com.anysou.remoteservice.MyAIDL;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
@@ -243,6 +245,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //读SD卡
+    public void readSD(View view) {
+        String extPath=System.getenv("EXTERNAL_STORAGE");
+        File SDF = new File(extPath,"testsd.txt");
+        try {
+            PermisionUtils.verifyStoragePermissions(MainActivity.this); //引用权限动态申请
+            InputStream in = new FileInputStream(SDF);
+            byte[] buffer = new byte [512];
+            int len = in.read(buffer);
+            String msg = new String(buffer,0,len);
+            in.close(); //读完成
+            textView.setText(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+            textView.setText("发生错误"+e.toString());
+        }
+    }
+
+
+
     // 发送给吐司
     private void sendToast(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
@@ -279,4 +301,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
 }
